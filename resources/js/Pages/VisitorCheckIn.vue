@@ -201,25 +201,20 @@ const form = useForm({
   remarks: '',
 });
 const submit = () => {
-  form.post(route('visitor.checkin.create'), {
-    onFinish: () => form.reset('name', 'type', 'vehicle_reg_no', 'remarks'),
-  });
-  form.reset()
-  visitorTypeChanged();
-  setTimeout(function () {
-    if (flashErrorMessage.value !== "") {
-      flashErrorMessage.value = "";
-    }
-    if (flashSuccessMessage.value !== "") {
-      flashSuccessMessage.value = "";
-    }
-  }, 5000);
+  form.post(route('visitor.checkin.create'), {});
 };
 watch(() => props.errorMessage, (newErrorMessage, oldErrorMessage) => {
   flashErrorMessage.value = newErrorMessage;
 });
 watch(() => props.successMessage, (newSuccessMessage, oldSuccessMessage) => {
   flashSuccessMessage.value = newSuccessMessage;
+  if (flashSuccessMessage.value !== "") {
+    form.reset('name', 'type', 'vehicle_reg_no', 'remarks')
+    visitorTypeChanged();
+    setTimeout(function () {
+      flashSuccessMessage.value = "";
+    }, 5000);
+  }
 });
 let flashErrorMessage = ref(props.errorMessage)
 let flashSuccessMessage = ref(props.successMessage)
