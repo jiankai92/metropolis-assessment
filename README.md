@@ -29,9 +29,10 @@ DB_PASSWORD=dbpassword
 ````
 
 5. Once credentials is defined, run `php artisan migrate` to create the required database tables.
-6. If you cloned the project on your webserver directory, the project can now be opened
+6. Using terminal, run `vite build` in project root directory to build required assets.
+7. If you cloned the project on your webserver directory, the project can now be opened
    at `http://<your-webserver-host>/path/to/metropolis-project`. Else using terminal, run `php artisan serve` at the
-   root of the project. The project will now be accessible at `http://127.0.0.1:8000`
+   root of the project. The project will now be accessible at `http://127.0.0.1:8000`.
 
 ### Setting up admin login user
 
