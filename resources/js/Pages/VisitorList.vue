@@ -167,7 +167,6 @@ const checkout = (checkIn) => {
       )
 }
 const search = () => {
-  console.log(filters);
   axios.post('/visitor/checkin/search', filters)
       .then((response) => {
             dataCheckIns.value = response.data;
