@@ -22,9 +22,9 @@ class VisitorCheckInController extends Controller
     public function create(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:64',
+            'name' => 'required|string|min:3|max:64',
             'type' => 'required|string|max:255|',
-            'vehicle_reg_no' => 'required_if:type,' . VisitorCheckIns::TYPE['VEHICLE'].'|max:16|',
+            'vehicle_reg_no' => 'required_if:type,' . VisitorCheckIns::TYPE['VEHICLE'].'|min:3|max:16|',
         ]);
 
         $check_in = VisitorCheckIns::create([
