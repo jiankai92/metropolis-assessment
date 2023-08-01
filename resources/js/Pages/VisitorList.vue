@@ -124,6 +124,12 @@
             <div v-else>
               No Checkins Found
             </div>
+            <Transition>
+              <div class="mt-2" v-if="errorMessage !== ''|| successMessage!== ''">
+                <span class="error text-red-700">{{ errorMessage }}</span>
+                <span class="success text-green-700">{{ successMessage }}</span>
+              </div>
+            </Transition>
           </div>
 
         </div>
@@ -153,27 +159,44 @@ const filters = useForm({
   status: '',
 })
 const dataCheckIns = ref("");
+let errorMessage = ref("")
+let successMessage = ref("")
 
+const flashSuccessMessage = (message) => {
+  successMessage.value = message
+  setTimeout(function () {
+    successMessage.value = "";
+  }, 5000);
+}
+const clearStatusMessages = () => {
+  successMessage.value = '';
+  errorMessage.value = '';
+}
+const showErrorMessage = (message) => {
+  errorMessage.value = message
+}
 const checkout = (checkIn) => {
+  clearStatusMessages();
   axios.post('/admin/checkout', {id: checkIn.id})
       .then((response) => {
             checkIn.checkout_at = response.data.checkout_at
-            // successMessage.value = 'Successfully Checked out Visitor'
+            flashSuccessMessage('Successfully Checked out Visitor')
           }
       )
       .catch((error) => {
-            // errorMessage.value = 'Failed to Checked out Visitor'
+            showErrorMessage('Failed to Check out Visitor');
           }
       )
 }
 const search = () => {
+  clearStatusMessages();
   axios.post('/visitor/checkin/search', filters)
       .then((response) => {
             dataCheckIns.value = response.data;
           }
       )
       .catch((error) => {
-            // errorMessage.value = 'Failed to Fetch search results'
+            showErrorMessage('Failed to Fetch search results');
           }
       )
 }
@@ -184,5 +207,13 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
 
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
 </style>
