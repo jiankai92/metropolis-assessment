@@ -16,5 +16,5 @@ class VisitorCheckIns extends Model
         'WALK_IN' => 'walk_in',
     ];
 
-    public $fillable = ['name', 'type', 'vehicle_reg_no', 'remarks', 'checkout_at'];
+    public $fillable = ['name', 'type', 'contact_no', 'vehicle_reg_no', 'remarks', 'checkout_at'];
 }

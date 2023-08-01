@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('visitor_checkins', function (Blueprint $table) {
             $table->id();
             $table->string('name', 64);
+            $table->string('contact_no', 32);
             $table->string('type', 16);
             $table->string('vehicle_reg_no', 16)->nullable();
             $table->text('remarks')->nullable();

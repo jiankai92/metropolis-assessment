@@ -23,15 +23,17 @@ class VisitorCheckInController extends Controller
     {
         $request->validate([
             'name' => 'required|string|min:3|max:64',
-            'type' => 'required|string|max:255|',
-            'vehicle_reg_no' => 'required_if:type,' . VisitorCheckIns::TYPE['VEHICLE'].'|min:3|max:16|',
+            'contact_no' => 'required|digits_between:5,32',
+            'type' => 'required|string|max:16',
+            'vehicle_reg_no' => 'required_if:type,' . VisitorCheckIns::TYPE['VEHICLE'],
         ]);
 
         $check_in = VisitorCheckIns::create([
             'name' => $request->name,
+            'contact_no' => $request->contact_no,
             'type' => $request->type,
             'vehicle_reg_no' => $request->vehicle_reg_no ?? null,
-            'remakrs' => $request->remarks ?? null,
+            'remarks' => $request->remarks ?? null,
         ]);
 
         if ($check_in) {

@@ -16,12 +16,17 @@
             <NavLink :href="route('visitor.checkin.show')" :active="route().current('visitor.checkin.show')">
               Visitor Check In
             </NavLink>
-            <NavLink v-if="$page.props.auth.user" :href="route('dashboard')" :active="route().current('dashboard')">
-              Dashboard
-            </NavLink>
+            <template v-if="$page.props.auth.user">
+              <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                Dashboard
+              </NavLink>
+              <NavLink :href="route('visitor.checkin.list')" :active="route().current('visitor.checkin.list')">
+                Visitor List
+              </NavLink>
+            </template>
             <template v-else>
               <NavLink :href="route('login')" :active="route().current('login')">
-                Log in
+                Admin Login
               </NavLink>
             </template>
           </div>
@@ -75,7 +80,7 @@
       </div>
       <div class="pt-2 pb-3 space-y-1" v-else>
         <ResponsiveNavLink :href="route('login')" :active="route().current('login')">
-          Log in
+          Admin Login
         </ResponsiveNavLink>
       </div>
 
@@ -117,6 +122,21 @@
           />
 
           <InputError class="mt-2" :message="form.errors.name"/>
+        </div>
+        <div>
+          <InputLabel for="contact_no" value="Contact No"/>
+
+          <TextInput
+              id="contact_no"
+              type="tel"
+              class="mt-1 block w-full"
+              v-model="form.contact_no"
+              required
+              autofocus
+              autocomplete="name"
+          />
+
+          <InputError class="mt-2" :message="form.errors.contact_no"/>
         </div>
         <div class="mt-4">
           <label for="type" class="block font-medium text-sm text-gray-700">Visitor Type</label>
@@ -196,6 +216,7 @@ const props = defineProps({
 const showingNavigationDropdown = ref(false);
 const form = useForm({
   name: '',
+  contact_no: '',
   type: 'walk_in',
   vehicle_reg_no: '',
   remarks: '',
@@ -209,7 +230,7 @@ watch(() => props.errorMessage, (newErrorMessage, oldErrorMessage) => {
 watch(() => props.successMessage, (newSuccessMessage, oldSuccessMessage) => {
   flashSuccessMessage.value = newSuccessMessage;
   if (flashSuccessMessage.value !== "") {
-    form.reset('name', 'type', 'vehicle_reg_no', 'remarks')
+    form.reset('name', 'type', 'contact_no', 'vehicle_reg_no', 'remarks')
     visitorTypeChanged();
     setTimeout(function () {
       flashSuccessMessage.value = "";
