@@ -22,6 +22,9 @@ Route::post('/visitor/checkin/submit', [VisitorCheckInController::class, 'create
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/visitor/checkin/list', [VisitorCheckInController::class, 'list'])->middleware(['auth', 'verified'])->name('visitor.checkin.list');
+Route::post('/visitor/checkin/search', [VisitorCheckInController::class, 'search'])->middleware(['auth', 'verified'])->name('visitor.checkin.search');
+Route::post('/admin/checkout', [VisitorCheckInController::class, 'adminCheckout'])->middleware(['auth', 'verified'])->name('admin.checkout');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
