@@ -12,13 +12,14 @@
           <thead class="border-b font-medium dark:border-neutral-500">
           <tr class="w-24">
             <th scope="col" class="p-2">#</th>
-            <th scope="col" class="p-2 min-w-[120px]">Name</th>
-            <th scope="col" class="p-2 min-w-[120px]">Contact No</th>
+            <th scope="col" class="p-2 min-w-[100px]">Name</th>
+            <th scope="col" class="p-2 min-w-[100px]">Contact No</th>
             <th scope="col" class="p-2 min-w-[120px]">Check In Type</th>
-            <th scope="col" class="p-2 min-w-[120px]">Vehicle No</th>
-            <th scope="col" class="p-2 min-w-[120px]">Check In Time</th>
-            <th scope="col" class="p-2 min-w-[120px]">Check Out Time</th>
-            <th scope="col" class="p-2 min-w-[120px]">Action</th>
+            <th scope="col" class="p-2 min-w-[100px]">Vehicle No</th>
+            <th scope="col" class="p-2 min-w-[100px]">Remarks</th>
+            <th scope="col" class="p-2 min-w-[100px]">Check In Time</th>
+            <th scope="col" class="p-2 min-w-[100px]">Check Out Time</th>
+            <th scope="col" class="p-2 min-w-[100px]">Action</th>
           </tr>
           <tr class="w-24">
             <th scope="col" class="p-2"></th>
@@ -51,6 +52,13 @@
                        placeholder="Search By Vehicle No">
               </SearchBar>
             </th>
+            <th scope="col" class="">
+              <SearchBar>
+                <input type="text" id="remark-search" v-model="filters.remarks" @change="search()"
+                       class="p-2 pl-7 text-sm text-gray-900 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                       placeholder="Search By Remarks">
+              </SearchBar>
+            </th>
             <th scope="col" colspan="2" class="p-2">
               <select id="status-search" v-model="filters.status" @change="search()"
                       class="border border-gray-300 text-sm rounded-lg focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full p-2.5 min-w-fit">
@@ -69,15 +77,13 @@
             <td class="whitespace-nowrap p-2" v-if="checkIn.type === 'walk_in'">Walk In</td>
             <td class="whitespace-nowrap p-2" v-else-if="checkIn.type === 'vehicle'">Vehicle</td>
             <td class="whitespace-nowrap p-2" v-else>Invalid Type</td>
-            <td class="whitespace-nowrap p-2" v-if="checkIn.vehicle_reg_no !== null">
-              {{ checkIn.vehicle_reg_no }}
-            </td>
-            <td class="whitespace-nowrap p-2" v-else>-</td>
+            <td class="whitespace-nowrap p-2">
+              {{ checkIn.vehicle_reg_no !== null ? checkIn.vehicle_reg_no : '-' }}</td>
+            <td class="whitespace-nowrap p-2">{{ checkIn.remarks !== null ? checkIn.remarks : '-' }}</td>
             <td class="whitespace-nowrap p-2">{{ checkIn.created_at }}</td>
-            <td class="whitespace-nowrap p-2" v-if="checkIn.checkout_at !== null">
-              {{ checkIn.checkout_at }}
+            <td class="whitespace-nowrap p-2">
+              {{ checkIn.checkout_at !== null ? checkIn.checkout_at : '-'}}
             </td>
-            <td class="whitespace-nowrap p-2" v-else>-</td>
             <td class="whitespace-nowrap p-2">
               <form @submit.prevent="checkout(checkIn)" :id="'checkout_'+checkIn.id"
                     :name="'checkout_'+checkIn.id">
@@ -121,6 +127,7 @@ const filters = useForm({
   name: '',
   contact_no: '',
   type: '',
+  remarks: '',
   vehicle_reg_no: '',
   status: '',
 })

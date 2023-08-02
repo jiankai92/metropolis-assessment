@@ -68,6 +68,9 @@ class VisitorCheckInController extends Controller
         if (isset($input['vehicle_reg_no'])) {
             $query->where('vehicle_reg_no', 'LIKE', '%' . $input['vehicle_reg_no'] . '%');
         }
+        if (isset($input['remarks'])) {
+            $query->where('remarks', 'LIKE', '%' . $input['vehicle_reg_no'] . '%');
+        }
         if (isset($input['status'])) {
             if ($input['status'] == '1') {
                 $query->whereNotNull('checkout_at');
