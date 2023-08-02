@@ -15,9 +15,10 @@ These prerequisites are required to run this project on a local server
 1. Clone this repository to your php webserver directory or any directory
 2. Using terminal application, run `composer install` and `npm install` command in the project root directory to install
    required dependencies.
-3. After dependencies are installed, run `php artisan key:generate` to generate key and `.env` file required for
-   project.
-4. After generating the `.env` file, setup the database connection by defining the database credentials in the `.env`
+3. After dependencies are installed, run `npm run build` in project root directory to build required assets.
+4. Run `cp .env.example .env` followed by `php artisan key:generate` to generate the `.env` file and also the key
+   required for project.
+5. After generating the `.env` file, setup the database connection by defining the database credentials in the `.env`
    file Sample:
 
 ````
@@ -27,9 +28,7 @@ DB_DATABASE=laravel
 DB_USERNAME=root
 DB_PASSWORD=dbpassword
 ````
-
-5. Once credentials is defined, run `php artisan migrate` to create the required database tables.
-6. Using terminal, run `vite build` in project root directory to build required assets.
+6. Once credentials is defined, run `php artisan migrate` to create the required database tables.
 7. If you cloned the project on your webserver directory, the project can now be opened
    at `http://<your-webserver-host>/path/to/metropolis-project`. Else using terminal, run `php artisan serve` at the
    root of the project. The project will now be accessible at `http://127.0.0.1:8000`.
